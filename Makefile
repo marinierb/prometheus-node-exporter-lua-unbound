@@ -29,4 +29,14 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DATA) usr/lib/lua/prometheus-collectors/unbound.lua $(1)/usr/lib/lua/prometheus-collectors/
 endef
 
+define Package/$(PKG_NAME)/postinst
+#!/bin/sh
+[ -n "$${IPKG_INSTROOT}" ] || /etc/init.d/prometheus-node-exporter-lua restart
+endef
+
+define Package/$(PKG_NAME)/postrm
+#!/bin/sh
+[ -n "$${IPKG_INSTROOT}" ] || /etc/init.d/prometheus-node-exporter-lua restart
+endef
+
 $(eval $(call BuildPackage,$(PKG_NAME)))
