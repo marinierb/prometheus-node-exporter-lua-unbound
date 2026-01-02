@@ -3,7 +3,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=prometheus-node-exporter-lua-unbound
 PKG_VERSION:=1.1.0
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
@@ -13,7 +13,7 @@ define Package/$(PKG_NAME)
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=Prometheus Node Exporter for Unbound Stats
-  DEPENDS:=+prometheus-node-exporter-lua
+  DEPENDS:=+luci-app-unbound +unbound-control +prometheus-node-exporter-lua
   PKGARCH:=all
 endef
 

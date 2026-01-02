@@ -1,12 +1,12 @@
 # prometheus-node-exporter-lua-unbound
 
-Add unbound stats to OpenWrt's Prometheus node exporter.
+Add Unbound stats to **OpenWrt**'s Prometheus node exporter.
 
 ## Pre-requisites
 
-The router must be running **prometheus-node-exporter-lua**
-
-    opkg install prometheus-node-exporter-lua
+- luci-app-unbound
+- unbound-control
+- prometheus-node-exporter-lua
 
 ## Install
 
