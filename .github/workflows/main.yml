@@ -52,7 +52,7 @@ jobs:
     - name: Copy IPK to output
       run: |
         mkdir -p output
-        find openwrt-sdk/bin/packages -name "${{ env.PKG_NAME }}_*.ipk" -exec cp {} output/ \;
+        find openwrt-sdk/bin/packages -name "${{ env.PKG_NAME }}_*.ipk" -exec cp {} output/${{ env.PKG_NAME }}.ipk \;
         ls -la output/
 
     - name: Upload IPK
