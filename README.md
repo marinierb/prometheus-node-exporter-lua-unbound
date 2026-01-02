@@ -1,4 +1,9 @@
-Super simple way to get unbound stats from my OpenWrt router into Prometheus.
+# prometheus-node-exporter-lua-unbound
+
+> [!NOTE]
+> For OpenWrt
+
+Add unbound stats to the Prometheus node exporter.
 
 ## Pre-requisites
 
