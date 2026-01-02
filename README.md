@@ -4,7 +4,7 @@ Super simple way to get unbound stats from my OpenWrt router into Prometheus.
 
 ## On the router
 
-    wget -O luci-app-connected.ipk https://github.com/marinierb/prometheus-node-exporter-lua-unbound/releases/latest/download/prometheus-node-exporter-lua-unbound.ipk
+    wget -O prometheus-node-exporter-lua-unbound.ipk https://github.com/marinierb/prometheus-node-exporter-lua-unbound/releases/latest/download/prometheus-node-exporter-lua-unbound.ipk
     opkg install prometheus-node-exporter-lua-unbound.ipk
 
 ## Test it
