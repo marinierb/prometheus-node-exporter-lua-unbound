@@ -1,9 +1,6 @@
 # prometheus-node-exporter-lua-unbound
 
-> [!NOTE]
-> For OpenWrt
-
-Add unbound stats to the Prometheus node exporter.
+Add unbound stats to OpenWrt's Prometheus node exporter.
 
 ## Pre-requisites
 
