@@ -1,20 +1,20 @@
 local function scrape()
     local metric_names = {
         "total.num.queries = unbound_total_num_queries",
-        "total.num.queries_ip_ratelimited = unbound_total_num_queries_ip_ratelimited",
-        "total.num.queries_cookie_valid = unbound_total_num_queries_cookie_valid",
-        "total.num.queries_cookie_client = unbound_total_num_queries_cookie_client",
-        "total.num.queries_cookie_invalid = unbound_total_num_queries_cookie_invalid",
-        "total.num.queries_discard_timeout = unbound_total_num_queries_discard_timeout",
-        "total.num.queries_wait_limit = unbound_total_num_queries_wait_limit",
+        "total.num.queries.ip.ratelimited = unbound_total_num_queries_ip_ratelimited",
+        "total.num.queries.cookie.valid = unbound_total_num_queries_cookie_valid",
+        "total.num.queries.cookie.client = unbound_total_num_queries_cookie_client",
+        "total.num.queries.cookie.invalid = unbound_total_num_queries_cookie_invalid",
+        "total.num.queries.discard.timeout = unbound_total_num_queries_discard_timeout",
+        "total.num.queries.wait.limit = unbound_total_num_queries_wait_limit",
         "total.num.cachehits = unbound_total_cachehits",
         "total.num.cachemiss = unbound_total_cachemiss",
         "total.num.prefetch = unbound_total_prefetch",
-        "total.num.queries_timed_out = unbound_total_num_queries_timed_out",
-        "total.query.queue_time_us.max = unbound_total_query_queue_time_us_max",
+        "total.num.queries.timed.out = unbound_total_num_queries_timed_out",
+        "total.query.queue.time.us.max = unbound_total_query_queue_time_us_max",
         "total.num.expired = unbound_total_num_expired",
         "total.num.recursivereplies = unbound_total_num_recursivereplies",
-        "total.num.dns_error_reports = unbound_total_num_dns_error_reports",
+        "total.num.dns.error.reports = unbound_total_num_dns_error_reports",
         "total.requestlist.avg = unbound_total_requestlist_avg",
         "total.requestlist.max = unbound_total_requestlist_max",
         "total.requestlist.overwritten = unbound_total_requestlist_overwritten",
@@ -35,7 +35,7 @@ local function scrape()
         end
     end
 
-    local handle = io.popen("/usr/sbin/unbound-control stats_noreset")
+    local handle = io.popen("/usr/sbin/unbound-control stats_noreset | sed 's/_/./g'")
     if not handle then
         return nil, "failed to run unbound-control"
     end

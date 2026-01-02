@@ -11,7 +11,6 @@ Super simple way to get unbound stats from my OpenWrt router into Prometheus.
 
     curl -s http://router:9100/metrics | grep unbound
 
-## Notes
+## That's it!
 
-> [!WARNING]
-> I have commented out the metrics I don't use. Update unbound.lua to your liking.
+Enjoy!
