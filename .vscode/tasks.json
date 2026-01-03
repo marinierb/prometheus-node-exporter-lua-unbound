@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "env": {
+            "RSYNC_CMD": "rsync -avz --progress",
+            "PROMETHEUS_SRC": "${workspaceFolder}/usr/lib/lua/prometheus-collectors/unbound.lua",
+            "PROMETHEUS_DST": "root@192.168.1.1:/usr/lib/lua/prometheus-collectors/unbound.lua",
+            "PROMETHEUS_PST": "ssh root@192.168.1.1 service prometheus-node-exporter-lua restart",
+            "PROMETHEUS_PST2": "brave http://router:9100/metrics"
+        }
+    },
+    "tasks": [
+        {
+            "label": "$(arrow-right) Deploy unbound.lua",
+            "type": "shell",
+            "command": "$RSYNC_CMD $PROMETHEUS_SRC $PROMETHEUS_DST && $PROMETHEUS_PST && $PROMETHEUS_PST2",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "statusbar": {
+                    "color" : "#226dd6"
+                }
+            }
+        }
+    ]
+}
