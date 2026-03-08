@@ -30,6 +30,11 @@ jobs:
           echo "PKG_VERSION=$PKG_VERSION" >> $GITHUB_ENV
           echo "PKG_RELEASE=$PKG_RELEASE" >> $GITHUB_ENV
 
+      - name: Fix Recursive Dependency
+        run: |
+          # This removes the circular dependency in the curl package feed
+          sed -i 's/depends on PACKAGE_libcurl//g' feeds/packages/net/curl/Config.in
+
       - name: Build
         uses: openwrt/gh-action-sdk@v7
         env:

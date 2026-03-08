@@ -22,7 +22,8 @@ endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/prometheus-collectors/
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/usr/lib/lua/prometheus-collectors/unbound.lua $(1)/usr/lib/lua/prometheus-collectors/
+	# Use $(PKG_BUILD_DIR) or a relative path to locate the file
+	$(INSTALL_DATA) ./usr/lib/lua/prometheus-collectors/unbound.lua $(1)/usr/lib/lua/prometheus-collectors/
 endef
 
 define Package/$(PKG_NAME)/postinst
