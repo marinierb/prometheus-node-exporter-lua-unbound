@@ -1,11 +1,10 @@
-# makefile for prometheus-node-exporter-lua-unbound
-
 include $(TOPDIR)/rules.mk
+
 PKG_NAME:=prometheus-node-exporter-lua-unbound
 PKG_VERSION:=2.0.0
 PKG_RELEASE:=1
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
+PKG_LICENSE:=MIT
+PKG_MAINTAINER:=
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -19,9 +18,6 @@ endef
 
 define Package/$(PKG_NAME)/description
   A lua script to extract unbound stats for Prometheus Node Exporter.
-endef
-
-define Build/Compile
 endef
 
 define Package/$(PKG_NAME)/install

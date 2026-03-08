@@ -25,8 +25,8 @@ jobs:
 
       - name: Get Package Version
         run: |
-          PKG_VERSION=$(grep '^PKG_VERSION' Makefile | cut -d= -f2 | tr -d ' ')
-          PKG_RELEASE=$(grep '^PKG_RELEASE' Makefile | cut -d= -f2 | tr -d ' ')
+          PKG_VERSION=$(grep '^PKG_VERSION' prometheus-node-exporter-lua-unbound/Makefile | cut -d= -f2 | tr -d ' ')
+          PKG_RELEASE=$(grep '^PKG_RELEASE' prometheus-node-exporter-lua-unbound/Makefile | cut -d= -f2 | tr -d ' ')
           echo "PKG_VERSION=$PKG_VERSION" >> $GITHUB_ENV
           echo "PKG_RELEASE=$PKG_RELEASE" >> $GITHUB_ENV
 
