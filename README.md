@@ -8,12 +8,27 @@ Add Unbound stats to **OpenWrt**'s Prometheus node exporter.
 - unbound-control
 - prometheus-node-exporter-lua
 
+## Important
+
+Version 2 is stricly for OpenWrt 25. Previous versions are for OpenWrt 24 and are frozen.
+
 ## Install
 
-On the router:
+##### On OpenWrt 25
 
-    wget -O prometheus-node-exporter-lua-unbound.ipk https://github.com/marinierb/prometheus-node-exporter-lua-unbound/releases/latest/download/prometheus-node-exporter-lua-unbound.ipk
-    opkg install prometheus-node-exporter-lua-unbound.ipk
+Example - for v2.0.0-r1
+
+```bash
+wget -O prometheus-node-exporter-lua-unbound.apk https://github.com/marinierb/prometheus-node-exporter-lua-unbound/releases/download/v2.0.0/prometheus-node-exporter-lua-unbound-2.0.0-r1.apk
+apk add --allow-untrusted prometheus-node-exporter-lua-unbound.apk
+```
+
+##### On OpenWrt 24
+
+```bash
+wget -O prometheus-node-exporter-lua-unbound.apk https://github.com/marinierb/prometheus-node-exporter-lua-unbound/releases/download/v1.0.6/prometheus-node-exporter-lua-unbound.ipk
+opkg install prometheus-node-exporter-lua-unbound.ipk
+```
 
 ## Test it
 
