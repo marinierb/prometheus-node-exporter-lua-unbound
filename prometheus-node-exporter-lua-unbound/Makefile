@@ -9,20 +9,20 @@ PKG_MAINTAINER:=
 include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)
-  SECTION:=utils
-  CATEGORY:=Utilities
-  TITLE:=Prometheus Node Exporter for Unbound Stats
-  DEPENDS:=+luci-app-unbound +unbound-control +prometheus-node-exporter-lua
-  PKGARCH:=all
+	SECTION:=utils
+	CATEGORY:=Utilities
+	TITLE:=Prometheus Node Exporter for Unbound Stats
+	DEPENDS:=+luci-app-unbound +unbound-control +prometheus-node-exporter-lua
+	PKGARCH:=all
 endef
 
 define Package/$(PKG_NAME)/description
-  A lua script to extract unbound stats for Prometheus Node Exporter.
+	A lua script to extract unbound stats for Prometheus Node Exporter.
 endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/prometheus-collectors/
-	$(INSTALL_DATA) usr/lib/lua/prometheus-collectors/unbound.lua $(1)/usr/lib/lua/prometheus-collectors/
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/usr/lib/lua/prometheus-collectors/unbound.lua $(1)/usr/lib/lua/prometheus-collectors/
 endef
 
 define Package/$(PKG_NAME)/postinst
