@@ -12,7 +12,7 @@ define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=Prometheus Node Exporter for Unbound Stats
-	DEPENDS:=+luci-app-unbound +unbound-control +prometheus-node-exporter-lua
+	DEPENDS:=+prometheus-node-exporter-lua
 	PKGARCH:=all
 endef
 

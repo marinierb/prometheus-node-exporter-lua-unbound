@@ -35,13 +35,7 @@ jobs:
         env:
           ARCH: ${{ matrix.arch }}-25.12.0
           PACKAGES: prometheus-node-exporter-lua-unbound
-          V: s
-          # The SDK runs this script inside the build environment
-          COMMAND: |
-            # 1. Fix the circular dependency in the curl feed
-            sed -i 's/depends on PACKAGE_libcurl//g' feeds/packages/net/curl/Config.in
-            # 2. Manually trigger the package compilation
-            make package/prometheus-node-exporter-lua-unbound/compile
+          V: sc
 
       - name: Store packages
         uses: actions/upload-artifact@v4
