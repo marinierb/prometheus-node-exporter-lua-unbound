@@ -17,12 +17,7 @@ Build/Compile=
 define Package/$(PKG_NAME)/Default
 	SECTION:=utils
 	CATEGORY:=Utilities
-<<<<<<< HEAD
-	TITLE:=Prometheus Node Exporter for Unbound Stats
-	DEPENDS:=+prometheus-node-exporter-lua
-=======
 	TITLE:=Prometheus Node Exporter collector for Unbound Stats
->>>>>>> fa8d9da (Build - for OpenWrt 25.12)
 	PKGARCH:=all
 endef
 
