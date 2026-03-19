@@ -14,15 +14,11 @@ include $(INCLUDE_DIR)/package.mk
 
 Build/Compile=
 
-define Package/$(PKG_NAME)/Default
+define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=Prometheus Node Exporter collector for Unbound Stats
 	PKGARCH:=all
-endef
-
-define Package/$(PKG_NAME)
-  $(call Package/$(PKG_NAME)/Default)
 	DEPENDS:=+unbound-control +prometheus-node-exporter-lua
 endef
 
@@ -46,5 +42,3 @@ define Package/$(PKG_NAME)/postrm
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
-
-#bruno
