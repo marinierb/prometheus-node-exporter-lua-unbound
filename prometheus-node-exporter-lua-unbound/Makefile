@@ -1,29 +1,43 @@
+# Copyright 2026 Bruno Marinier (bmgm41@gmail.com)
+# This is free software, licensed under the GNU General Public License v2.
+
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-node-exporter-lua-unbound
 PKG_VERSION:=2.0.0
 PKG_RELEASE:=1
-PKG_LICENSE:=MIT
-PKG_MAINTAINER:=
+
+PKG_MAINTAINER:=Bruno Marinier <bmgm41@gmail.com>
+PKG_LICENSE:=Apache-2.0
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/$(PKG_NAME)
+Build/Compile=
+
+define Package/$(PKG_NAME)/Default
 	SECTION:=utils
 	CATEGORY:=Utilities
+<<<<<<< HEAD
 	TITLE:=Prometheus Node Exporter for Unbound Stats
 	DEPENDS:=+prometheus-node-exporter-lua
+=======
+	TITLE:=Prometheus Node Exporter collector for Unbound Stats
+>>>>>>> fa8d9da (Build - for OpenWrt 25.12)
 	PKGARCH:=all
 endef
 
+define Package/$(PKG_NAME)
+  $(call Package/$(PKG_NAME)/Default)
+	DEPENDS:=+unbound-control +prometheus-node-exporter-lua
+endef
+
 define Package/$(PKG_NAME)/description
-	A lua script to extract unbound stats for Prometheus Node Exporter.
+	Prometheus node exporter (unbound collector)
 endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/prometheus-collectors/
-	# Use $(PKG_BUILD_DIR) or a relative path to locate the file
-	$(INSTALL_DATA) ./usr/lib/lua/prometheus-collectors/unbound.lua $(1)/usr/lib/lua/prometheus-collectors/
+	$(INSTALL_DATA) ./files/usr/lib/lua/prometheus-collectors/unbound.lua $(1)/usr/lib/lua/prometheus-collectors/
 endef
 
 define Package/$(PKG_NAME)/postinst
@@ -37,3 +51,5 @@ define Package/$(PKG_NAME)/postrm
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
+
+#bruno
