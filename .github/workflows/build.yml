@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         arch:
-          - aarch64_cortex-a53
+          - aarch64_cortex-a53-25.12.1
 
     steps:
       - uses: actions/checkout@v4
