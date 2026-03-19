@@ -30,7 +30,7 @@ jobs:
           echo "PKG_VERSION=$PKG_VERSION" >> $GITHUB_ENV
           echo "PKG_RELEASE=$PKG_RELEASE" >> $GITHUB_ENV
 
-        - name: Build
+      - name: Build
         uses: openwrt/gh-action-sdk@v7
         env:
           ARCH: ${{ matrix.arch }}
