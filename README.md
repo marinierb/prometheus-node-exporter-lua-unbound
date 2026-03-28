@@ -4,9 +4,21 @@ Add Unbound stats to **OpenWrt**'s Prometheus node exporter.
 
 ## Pre-requisites
 
+### Packages
+
 - luci-app-unbound
 - unbound-control
 - prometheus-node-exporter-lua
+
+### Unbound config
+
+Add the following settings (under Services → Unbound DNS → Files → Extended)
+```
+remote-control:
+    control-enable: yes
+    control-interface: /run/unbound.ctl
+    control-use-cert: no
+```
 
 ## Important
 
