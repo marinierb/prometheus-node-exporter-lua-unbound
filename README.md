@@ -1,16 +1,62 @@
 # prometheus-node-exporter-lua-unbound
 
-Add Unbound stats to **OpenWrt**'s Prometheus node exporter.
+```
+# TYPE unbound_num_queries_ip_ratelimited_total counter
+# TYPE unbound_num_queries_cookie_valid_total counter
+# TYPE unbound_num_queries_cookie_client_total counter
+# TYPE unbound_num_queries_cookie_invalid_total counter
+# TYPE unbound_num_queries_discard_timeout_total counter
+# TYPE unbound_num_queries_wait_limit_total counter
+# TYPE unbound_cachehits_total counter
+# TYPE unbound_cachemiss_total counter
+# TYPE unbound_prefetch_total counter
+# TYPE unbound_num_queries_timed_out_total counter
+# TYPE unbound_query_queue_time_us_max gauge
+# TYPE unbound_num_expired_total counter
+# TYPE unbound_num_recursivereplies_total counter
+# TYPE unbound_num_dns_error_reports_total counter
+# TYPE unbound_requestlist_avg gauge
+# TYPE unbound_requestlist_max gauge
+# TYPE unbound_requestlist_overwritten_total counter
+# TYPE unbound_requestlist_exceeded_total counter
+# TYPE unbound_requestlist_current_all gauge
+# TYPE unbound_requestlist_current_user gauge
+# TYPE unbound_recursion_time_avg gauge
+# TYPE unbound_recursion_time_median gauge
+unbound_num_queries_total{} 32827
+unbound_num_queries_ip_ratelimited_total{} 0
+unbound_num_queries_cookie_valid_total{} 0
+unbound_num_queries_cookie_client_total{} 0
+unbound_num_queries_cookie_invalid_total{} 0
+unbound_num_queries_discard_timeout_total{} 2
+unbound_num_queries_wait_limit_total{} 0
+unbound_cachehits_total{} 26013
+unbound_cachemiss_total{} 6814
+unbound_prefetch_total{} 1305
+unbound_num_queries_timed_out_total{} 0
+unbound_query_queue_time_us_max{} 0
+unbound_num_expired_total{} 0
+unbound_num_recursivereplies_total{} 6812
+unbound_num_dns_error_reports_total{} 0
+unbound_requestlist_avg{} 0.751201
+unbound_requestlist_max{} 15
+unbound_requestlist_overwritten_total{} 0
+unbound_requestlist_exceeded_total{} 0
+unbound_requestlist_current_all{} 0
+unbound_requestlist_current_user{} 0
+unbound_recursion_time_avg{} 0.052909
+unbound_recursion_time_median{} 0.0139971
+```
 
-## Pre-requisites
+## Installation
 
-### Packages
+### 1. Install packages
 
 - luci-app-unbound
 - unbound-control
 - prometheus-node-exporter-lua
 
-### Unbound config
+### 2. Configure Unbound
 
 Add the following settings (under Services → Unbound DNS → Files → Extended)
 ```
@@ -20,31 +66,14 @@ remote-control:
     control-use-cert: no
 ```
 
-## Important
+### 3. Copy extractor
 
-Version 2 is stricly for OpenWrt 25. Previous versions are for OpenWrt 24 and are frozen.
-
-## Install
-
-##### On OpenWrt 25
-
-Example - for v2.0.0-r1
-
-```bash
-wget -O prometheus-node-exporter-lua-unbound.apk https://github.com/marinierb/prometheus-node-exporter-lua-unbound/releases/download/v2.0.0/prometheus-node-exporter-lua-unbound-2.0.0-r1.apk
-apk add --allow-untrusted prometheus-node-exporter-lua-unbound.apk
-```
-
-##### On OpenWrt 24
-
-```bash
-wget -O prometheus-node-exporter-lua-unbound.apk https://github.com/marinierb/prometheus-node-exporter-lua-unbound/releases/download/v1.0.6/prometheus-node-exporter-lua-unbound.ipk
-opkg install prometheus-node-exporter-lua-unbound.ipk
-```
+- Copy **unbound.lua** to **/usr/lib/lua/prometheus-collectors/**
+- Run **/etc/init.d/prometheus-node-exporter-lua restart**
 
 ## Test it
 
-    curl -s http://router:9100/metrics | grep unbound
+    curl -s http://<routerIP>:9100/metrics | grep unbound
 
 ## That's it!
 
