@@ -8,7 +8,7 @@
             "PROMETHEUS_PST":    "ssh root@192.168.1.1 service prometheus-node-exporter-lua restart",
             "PROMETHEUS_PST2":   "brave http://router:9100/metrics",
             "PACKAGES_SCRIPT":   "cp ${workspaceFolder}/prometheus-node-exporter-lua-unbound/files/usr/lib/lua/prometheus-collectors/unbound.lua /home/bruno/OpenWrt/packages/utils/prometheus-node-exporter-lua/files/usr/lib/lua/prometheus-collectors/unbound.lua",
-            "PACKAGES_MAKEFILE": "cp ${workspaceFolder}/prometheus-node-exporter-lua-unbound/Makefile.local                                      /home/bruno/OpenWrt/packages/utils/prometheus-node-exporter-lua/Makefile",
+            "PACKAGES_MAKEFILE": "cp ${workspaceFolder}/prometheus-node-exporter-lua-unbound/Makefile.formal                                     /home/bruno/OpenWrt/packages/utils/prometheus-node-exporter-lua/Makefile",
             "PACKAGES_CD":       "cd /home/bruno/OpenWrt/openwrt",
             "PACKAGES_MAKE":     "make -j16 package/prometheus-node-exporter-lua/{clean,compile} V=s",
             "PACKAGES_CHECK":    "ls -ltr bin/packages/aarch64_cortex-a53/packages",
