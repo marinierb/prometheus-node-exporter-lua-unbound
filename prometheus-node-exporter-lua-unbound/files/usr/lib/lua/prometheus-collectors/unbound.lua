@@ -1,8 +1,4 @@
--- Unbound settings (in Unbound --> Files --> Extended)
---     remote-control:
---         control-enable: yes
---         control-interface: /run/unbound.ctl
---         control-use-cert: no
+-- Unbound stats exporter
 
 local socket = require("socket")
 local unix = require("socket.unix")
