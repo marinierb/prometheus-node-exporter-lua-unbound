@@ -19,7 +19,7 @@ jobs:
       - name: Build package
         uses: openwrt/gh-action-sdk@main
         env:
-          ARCH: aarch64_cortex-a53-3.10
+          ARCH: aarch64_cortex-a53
           FEEDNAME: marinierb_packages
           PACKAGES: prometheus-node-exporter-lua-unbound
           INDEX: 1
