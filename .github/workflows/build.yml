@@ -19,8 +19,8 @@ jobs:
       - name: Build package
         uses: openwrt/gh-action-sdk@main
         env:
-          ARCH: aarch64_cortex-a53
-          FEEDNAME: marinierb_packages
+          ARCH: aarch64_cortex-a53-25.12
+          FEEDNAME: mypackage
           PACKAGES: prometheus-node-exporter-lua-unbound
           INDEX: 1
           NO_SHFMT_CHECK: 1
@@ -29,4 +29,4 @@ jobs:
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
-          files: bin/packages/aarch64_cortex-a53/marinierb_packages/prometheus-node-exporter-lua-unbound-*.apk
+          files: bin/packages/aarch64_cortex-a53/mypackage/prometheus-node-exporter-lua-unbound-*.apk
