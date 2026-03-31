@@ -21,6 +21,8 @@ jobs:
           ARCH: ${{ env.ARCH }}
           PACKAGES: ${{ env.PACKAGES }}
           FEEDNAME: custom
+          EXTRA_CONFIG: |
+            CONFIG_LIBCURL_LDAP=n
 
       - name: Prepare repo
         run: |
