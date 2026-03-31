@@ -1,29 +1,42 @@
-name: Build Single Package
+name: Build package
+
 on:
   push:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      ARCH: x86_64-25.12.0
+      PACKAGES: prometheus-node-exporter-lua-unbound
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Add custom package
-        run: |
-          mkdir -p package/prometheus-node-exporter-lua-unbound
-          cp -r prometheus-node-exporter-lua-unbound/* package/prometheus-node-exporter-lua-unbound/
-
-      - name: Build Package
+      - name: Build package
         uses: openwrt/gh-action-sdk@main
         env:
-          ARCH: aarch64_cortex-a53
-          REPO: https://github.com/openwrt/openwrt.git
-          BRANCH: openwrt-25.12
-          MAKE_TARGET: package/prometheus-node-exporter-lua-unbound/{clean,compile}
+          ARCH: ${{ env.ARCH }}
+          PACKAGES: ${{ env.PACKAGES }}
+          FEEDNAME: custom
 
-      - name: Upload package artifact
+      - name: Prepare repo
+        run: |
+          mkdir -p repo/x86_64
+          cp bin/packages/x86_64/custom/prometheus-node-exporter-lua-unbound-*.apk repo/x86_64/
+
+      - name: Generate APK index (unsigned)
+        run: |
+          docker run --rm -v $PWD/repo:/repo alpine:latest sh -c "
+            apk add --no-cache apk-tools
+            cd /repo/x86_64
+            apk index -o APKINDEX.tar.gz *.apk
+          "
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: openwrt-package
-          path: bin/packages/**/prometheus-node-exporter-lua-unbound-*.apk
+          name: apk-feed
+          path: repo/
