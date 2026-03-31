@@ -1,32 +1,29 @@
-name: Build OpenWrt package
-
+name: Build Single Package
 on:
   push:
-    branches: [ main ]
-  release:
-    types: [ published ]
+    branches: [main]
 
 jobs:
   build:
-    name: Build aarch64_cortex-a53
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Build package
+      - name: Add custom package
+        run: |
+          mkdir -p package/prometheus-node-exporter-lua-unbound
+          cp -r prometheus-node-exporter-lua-unbound/* package/prometheus-node-exporter-lua-unbound/
+
+      - name: Build Package
         uses: openwrt/gh-action-sdk@main
         env:
-          ARCH: aarch64_cortex-a53
-          FEEDNAME: mypackage
-          PACKAGES: prometheus-node-exporter-lua-unbound
-          INDEX: 1
-          NO_SHFMT_CHECK: 1
+          ARCH: all
+          REPO: https://github.com/openwrt/openwrt.git
+          BRANCH: openwrt-25.12
+          MAKE_TARGET: package/prometheus-node-exporter-lua-unbound/{clean,compile}
 
-      - name: Upload APK to release
-        if: github.event_name == 'release'
-        uses: softprops/action-gh-release@v2
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
         with:
-          files: bin/packages/aarch64_cortex-a53/mypackage/prometheus-node-exporter-lua-unbound-*.apk
+          name: openwrt-package
+          path: bin/packages/**/prometheus-node-exporter-lua-unbound-*.apk
