@@ -1,5 +1,6 @@
 # prometheus-node-exporter-lua-unbound
 
+Extracts Unbound stats from OpenWrt (regular stats only - no extended)
 ```
 # TYPE unbound_num_queries_ip_ratelimited_total counter
 # TYPE unbound_num_queries_cookie_valid_total counter
@@ -48,15 +49,13 @@ unbound_recursion_time_avg{} 0.052909
 unbound_recursion_time_median{} 0.0139971
 ```
 
-## Installation
-
-### 1. Install packages
+## 1. Prerequisites
 
 - luci-app-unbound
 - unbound-control
 - prometheus-node-exporter-lua
 
-### 2. Configure Unbound
+## 2. Configure Unbound
 
 Add the following settings (under Services → Unbound DNS → Files → Extended)
 ```
@@ -66,14 +65,20 @@ remote-control:
     control-use-cert: no
 ```
 
-### 3. Copy extractor
+### 3. Install
+```bash
+wget https://marinierb.github.io/prometheus-node-exporter-lua-unbound/prometheus-node-exporter-lua-unbound-latest.apk
+apk add --allow-untrusted prometheus-node-exporter-lua-unbound-latest.apk
+```
 
-- Copy **unbound.lua** to **/usr/lib/lua/prometheus-collectors/**
-- Run **/etc/init.d/prometheus-node-exporter-lua restart**
+### Older versions
+
+See https://marinierb.github.io/prometheus-node-exporter-lua-unbound/
 
 ## Test it
-
-    curl -s http://<routerIP>:9100/metrics | grep unbound
+```bash
+curl -s http://router:9100/metrics | grep unbound
+```
 
 ## That's it!
 

@@ -4,7 +4,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-node-exporter-lua-unbound
-PKG_VERSION:=v2.0.0
+PKG_VERSION:=2026.04.01
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Bruno Marinier <bmgm41@gmail.com>
@@ -14,15 +14,19 @@ include $(INCLUDE_DIR)/package.mk
 
 Build/Compile=
 
-define Package/$(PKG_NAME)
+define Package/$(PKG_NAME)/Default
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=Prometheus node exporter for Unbound stats
   PKGARCH:=all
-	DEPENDS:=+unbound-control +prometheus-node-exporter-lua
 endef
 
-define Package/prometheus-node-exporter-lua-unbound/install
+define Package/$(PKG_NAME)
+  $(call Package/$(PKG_NAME)/Default)
+  DEPENDS:=+unbound-control +prometheus-node-exporter-lua
+endef
+
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/prometheus-collectors
 	$(INSTALL_DATA) ./files/usr/lib/lua/prometheus-collectors/unbound.lua         $(1)/usr/lib/lua/prometheus-collectors/
 endef
@@ -37,4 +41,4 @@ define Package/$(PKG_NAME)/postrm
 [ -n "$${IPKG_INSTROOT}" ] || service prometheus-node-exporter-lua restart
 endef
 
-$(eval $(call BuildPackage,prometheus-node-exporter-lua-unbound))
+$(eval $(call BuildPackage,$(PKG_NAME)))

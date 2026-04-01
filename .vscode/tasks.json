@@ -18,47 +18,9 @@
     },
     "tasks": [
         {
-            "label": "$(arrow-right) Deploy to router",
+            "label": "$(arrow-right) Copy to router",
             "type": "shell",
             "command": "$RSYNC_CMD $EXPORTER_SRC $EXPORTER_DST && $EXPORTER_RESTART && $EXPORTER_TEST",
-            "problemMatcher": [],
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "options": {
-                "statusbar": {
-                    "color" : "#226dd6"
-                }
-            }
-        },
-        // {
-        //     "label": "$(arrow-right) Create and Push Tag",
-        //     "type": "shell",
-        //     "command": "TAG=$(grep -E '^(PKG_VERSION|PKG_RELEASE)' Makefile | grep -v 'PKG_RELEASE:=1$' | cut -d'=' -f2 | tr -d ' ' | tr '\n' '-') && TAG=v${TAG%-} && git tag $TAG && git push origin $TAG",
-        //     "problemMatcher": [],
-        //     "presentation": {
-        //         "echo": true,
-        //         "reveal": "always",
-        //         "focus": false,
-        //         "panel": "shared"
-        //     },
-        //     "options": {
-        //         "statusbar": {
-        //             "color" : "#226dd6"
-        //         }
-        //     }
-        // },
-        {
-            "label": "$(arrow-right) Copy to packages",
-            "type": "shell",
-            "command": "$PACKAGES_SCRIPT && $PACKAGES_MAKEFILE",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
@@ -79,7 +41,7 @@
         {
             "label": "$(arrow-right) Make",
             "type": "shell",
-            "command": "$PACKAGES_CD && $PACKAGES_MAKE && $PACKAGES_CHECK",
+            "command": "$PACKAGES_SCRIPT && $PACKAGES_MAKEFILE && $PACKAGES_CD && $PACKAGES_MAKE && $PACKAGES_CHECK",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
@@ -101,6 +63,27 @@
             "label": "$(arrow-right) Install",
             "type": "shell",
             "command": "$PACKAGE_COPY && $PACKAGE_INSTALL && $PROMETHEUS_PST2",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "statusbar": {
+                    "color" : "#226dd6"
+                }
+            }
+        },
+        {
+            "label": "$(arrow-right) Push",
+            "type": "shell",
+            "command": "${workspaceFolder}/.vscode/push.sh",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
