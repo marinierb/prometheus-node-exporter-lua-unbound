@@ -22,7 +22,7 @@ jobs:
           PACKAGES: ${{ env.PACKAGES }}
           FEEDNAME: custom
           EXTRA_CONFIG: |
-            CONFIG_LIBCURL_LDAP=n
+            CONFIG_PACKAGE_libcurl=n
 
       - name: Prepare repo
         run: |
