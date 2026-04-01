@@ -81,9 +81,9 @@
             }
         },
         {
-            "label": "$(arrow-right) Push",
+            "label": "$(arrow-right) Deploy",
             "type": "shell",
-            "command": "${workspaceFolder}/.vscode/push.sh",
+            "command": "${workspaceFolder}/.vscode/deploy.sh",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
