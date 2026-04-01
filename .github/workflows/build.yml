@@ -22,6 +22,7 @@ jobs:
           PACKAGES: ${{ env.PACKAGES }}
           FEEDNAME: custom
           NO_DEFAULT_PACKAGES: 1
+          CONFIG: "CONFIG_LIBCURL_LDAP=n\nCONFIG_LIBCURL_LDAPS=n"
 
       - name: Prepare repo
         run: |
