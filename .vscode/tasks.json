@@ -2,18 +2,18 @@
     "version": "2.0.0",
     "options": {
         "env": {
-            "RSYNC_CMD": "rsync -avz --progress",
+            "RSYNC_CMD":         "rsync -av --progress",
             "EXPORTER_SRC":      "${workspaceFolder}/prometheus-node-exporter-lua-unbound/files/usr/lib/lua/prometheus-collectors/unbound.lua",
             "EXPORTER_DST":      "root@192.168.1.1:/usr/lib/lua/prometheus-collectors/unbound.lua",
             "EXPORTER_RESTART":  "ssh root@192.168.1.1 service prometheus-node-exporter-lua restart",
             "EXPORTER_TEST":     "brave http://router:9100/metrics",
-            "PACKAGES_SCRIPT":   "cp ${workspaceFolder}/prometheus-node-exporter-lua-unbound/files/usr/lib/lua/prometheus-collectors/unbound.lua /home/bruno/OpenWrt/packages/utils/prometheus-node-exporter-lua/files/usr/lib/lua/prometheus-collectors/unbound.lua",
-            "PACKAGES_MAKEFILE": "cp ${workspaceFolder}/prometheus-node-exporter-lua-unbound/Makefile                                            /home/bruno/OpenWrt/packages/utils/prometheus-node-exporter-lua/Makefile",
+            "PACKAGE_PUT_FILES": "rsync -arv ${workspaceFolder}/prometheus-node-exporter-lua-unbound /home/bruno/OpenWrt/packages/utils/",
             "PACKAGES_CD":       "cd /home/bruno/OpenWrt/openwrt",
-            "PACKAGES_MAKE":     "make -j16 package/prometheus-node-exporter-lua/{clean,compile} V=s",
+            "PACKAGES_MAKE":     "make -j16 package/prometheus-node-exporter-lua-unbound/{clean,compile} V=s",
             "PACKAGES_CHECK":    "ls -ltr bin/packages/aarch64_cortex-a53/packages",
-            "PACKAGE_COPY":      "rsync -av /home/bruno/OpenWrt/openwrt/bin/packages/aarch64_cortex-a53/packages/prometheus-node-exporter-lua-unbound-* root@router:/mnt/sda1/",
-            "PACKAGE_INSTALL":   "ssh root@router apk add --allow-untrusted /mnt/sda1/prometheus-node-exporter-lua-unbound-*.apk"
+            "PACKAGE_FETCH":     "rsync -av /home/bruno/OpenWrt/openwrt/bin/packages/aarch64_cortex-a53/packages/prometheus-node-exporter-lua-unbound-* root@router:/mnt/sda1/",
+            "PACKAGE_INSTALL":   "ssh root@router apk add --allow-untrusted /mnt/sda1/prometheus-node-exporter-lua-unbound-*.apk",
+            "PACKAGE_TEST":      "brave http://router:9100/metrics"
         }
     },
     "tasks": [
@@ -41,7 +41,7 @@
         {
             "label": "$(arrow-right) Make",
             "type": "shell",
-            "command": "$PACKAGES_SCRIPT && $PACKAGES_MAKEFILE && $PACKAGES_CD && $PACKAGES_MAKE && $PACKAGES_CHECK",
+            "command": "$PACKAGE_PUT_FILES && $PACKAGES_CD && $PACKAGES_MAKE && $PACKAGES_CHECK",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
@@ -62,7 +62,7 @@
         {
             "label": "$(arrow-right) Install",
             "type": "shell",
-            "command": "$PACKAGE_COPY && $PACKAGE_INSTALL && $PROMETHEUS_PST2",
+            "command": "$PACKAGE_COPY && $PACKAGE_INSTALL && $PACKAGE_TEST",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
