@@ -4,7 +4,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-node-exporter-lua-unbound
-PKG_VERSION:=2026.04.01
+PKG_VERSION:=2026.04.02
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Bruno Marinier <bmgm41@gmail.com>
