@@ -1,0 +1,57 @@
+name: Build Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    name: ${{ matrix.arch }} build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch:
+          - aarch64_cortex-a53
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get Package Version
+        run: |
+          PKG_VERSION=$(grep '^PKG_VERSION' prometheus-node-exporter-lua-unbound/Makefile | cut -d= -f2 | tr -d ' ')
+          PKG_RELEASE=$(grep '^PKG_RELEASE' prometheus-node-exporter-lua-unbound/Makefile | cut -d= -f2 | tr -d ' ')
+          echo "PKG_VERSION=$PKG_VERSION" >> $GITHUB_ENV
+          echo "PKG_RELEASE=$PKG_RELEASE" >> $GITHUB_ENV
+
+      - name: Set SDK Architecture
+        run: |
+          echo "SDK_ARCH=${{ matrix.arch }}" >> $GITHUB_ENV
+
+      - name: Build
+        uses: openwrt/gh-action-sdk@v7
+        env:
+          ARCH: ${{ env.SDK_ARCH }}
+          PACKAGES: prometheus-node-exporter-lua-unbound
+          V: s
+
+      - name: Store packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.arch }}-packages
+          path: bin/packages/${{ matrix.arch }}/action/*.apk
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "v${{ env.PKG_VERSION }}${{ env.PKG_RELEASE != '1' && format('-{0}', env.PKG_RELEASE) || '' }}"
+          files: bin/packages/${{ matrix.arch }}/action/*.apk
