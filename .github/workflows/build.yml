@@ -37,7 +37,7 @@ jobs:
           echo "SDK_ARCH=${{ matrix.arch }}" >> $GITHUB_ENV
 
       - name: Build
-        uses: openwrt/gh-action-sdk@v7
+        uses: openwrt/gh-action-sdk@v10
         env:
           ARCH: ${{ env.SDK_ARCH }}
           PACKAGES: prometheus-node-exporter-lua-unbound
