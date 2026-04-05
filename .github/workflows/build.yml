@@ -2,11 +2,14 @@ name: Build Package
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
   workflow_dispatch:
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -57,20 +60,35 @@ jobs:
           files: bin/packages/${{ matrix.arch }}/action/*.apk
 
   deploy:
+
     needs: build
 
     permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
+      pages: write
+      id-token: write
 
-    # Deploy to the github-pages environment
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
-    # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout gh-pages-dist
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages-dist
+
+      - name: Download built packages
+        uses: actions/download-artifact@v4
+        with:
+          name: packages
+          path: packages/${{ needs.build.outputs.arch }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .   # root of the checked-out gh-pages-dist branch
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
