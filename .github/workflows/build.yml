@@ -6,6 +6,9 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  PKG_NAME: prometheus-node-exporter-lua-unbound
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,8 +23,8 @@ jobs:
 
       - name: Get Package Version
         run: |
-          PKG_VERSION=$(grep '^PKG_VERSION' prometheus-node-exporter-lua-unbound/Makefile | cut -d= -f2 | tr -d ' ')
-          PKG_RELEASE=$(grep '^PKG_RELEASE' prometheus-node-exporter-lua-unbound/Makefile | cut -d= -f2 | tr -d ' ')
+          PKG_VERSION=$(grep '^PKG_VERSION' ${{ env.PKG_NAME }}/Makefile | cut -d= -f2 | tr -d ' ')
+          PKG_RELEASE=$(grep '^PKG_RELEASE' ${{ env.PKG_NAME }}/Makefile | cut -d= -f2 | tr -d ' ')
           echo "PKG_VERSION=$PKG_VERSION" >> $GITHUB_ENV
           echo "PKG_RELEASE=$PKG_RELEASE" >> $GITHUB_ENV
 
@@ -33,7 +36,7 @@ jobs:
         uses: openwrt/gh-action-sdk@main
         env:
           ARCH: ${{ matrix.arch }}
-          PACKAGES: prometheus-node-exporter-lua-unbound
+          PACKAGES: ${{ env.PKG_NAME }}
           IGNORE_ERRORS: 1
           NO_DEFAULT_FEEDS: 1
           #INDEX: 1
@@ -75,7 +78,7 @@ jobs:
 
       - name: Rename apk file
         run: |
-          mv dist/prometheus-node-exporter-lua-unbound-*.apk dist/prometheus-node-exporter-lua-unbound.apk
+          mv dist/${{ env.PKG_NAME }}-*.apk dist/${{ env.PKG_NAME }}.apk
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
