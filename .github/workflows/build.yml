@@ -70,6 +70,10 @@ jobs:
           name: packages
           path: dist/
 
+      - name: Rename apk file
+        run: |
+          mv prometheus-node-exporter-lua-unbound-*.apk prometheus-node-exporter-lua-unbound.apk
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
