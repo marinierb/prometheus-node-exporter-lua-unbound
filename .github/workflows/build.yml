@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 jobs:
@@ -47,10 +45,15 @@ jobs:
           name: packages
           path: bin/packages/${{ matrix.arch }}/action/*.apk
 
+      - name: Force push tag
+        run: |
+          git tag -f v${{ env.PKG_VERSION }}
+          git push -f origin v${{ env.PKG_VERSION }}
+
       - name: Create Release
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ env.PKG_VERSION }}
           name: "v${{ env.PKG_VERSION }}${{ env.PKG_RELEASE != '1' && format('-{0}', env.PKG_RELEASE) || '' }}"
           files: bin/packages/${{ matrix.arch }}/action/*.apk
 
