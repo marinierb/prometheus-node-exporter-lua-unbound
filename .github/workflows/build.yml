@@ -11,6 +11,7 @@ on:
 jobs:
 
   build:
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -58,11 +59,9 @@ jobs:
         with:
           name: "v${{ env.PKG_VERSION }}${{ env.PKG_RELEASE != '1' && format('-{0}', env.PKG_RELEASE) || '' }}"
           files: bin/packages/${{ matrix.arch }}/action/*.apk
-
   deploy:
 
     needs: build
-
     permissions:
       pages: write
       id-token: write
@@ -73,10 +72,11 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout gh-pages-dist
         uses: actions/checkout@v4
         with:
-          ref: gh-pages-dist
+          ref: refs/heads/gh-pages-dist
 
       - name: Download built packages
         uses: actions/download-artifact@v4
