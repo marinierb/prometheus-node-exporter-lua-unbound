@@ -6,24 +6,21 @@ on:
       - 'v*'
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
 jobs:
   build:
-    name: ${{ matrix.arch }} build
     runs-on: ubuntu-latest
     strategy:
       matrix:
         arch:
           - aarch64_cortex-a53
 
+    permissions:
+      contents: write   # to create releases and upload artifacts
+
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        #with:
+        #  fetch-depth: 0
 
       - name: Get Package Version
         run: |
@@ -39,17 +36,17 @@ jobs:
       - name: Build
         uses: openwrt/gh-action-sdk@main
         env:
-          ARCH: ${{ env.SDK_ARCH }}
+          ARCH: ${{ matrix.arch }}
           PACKAGES: prometheus-node-exporter-lua-unbound
           IGNORE_ERRORS: 1
           NO_DEFAULT_FEEDS: 1
-          # INDEX: 1
-          V: s
+          #INDEX: 1
+          #V: s
 
       - name: Store packages
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.arch }}-packages
+          name: packages
           path: bin/packages/${{ matrix.arch }}/action/*.apk
 
       - name: Create Release
@@ -58,3 +55,22 @@ jobs:
         with:
           name: "v${{ env.PKG_VERSION }}${{ env.PKG_RELEASE != '1' && format('-{0}', env.PKG_RELEASE) || '' }}"
           files: bin/packages/${{ matrix.arch }}/action/*.apk
+
+  deploy:
+    needs: build
+
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
