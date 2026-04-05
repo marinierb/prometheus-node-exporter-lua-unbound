@@ -49,13 +49,13 @@ unbound_recursion_time_avg{} 0.052909
 unbound_recursion_time_median{} 0.0139971
 ```
 
-## Prerequisites
+## Dependencies
 
 - luci-app-unbound
 - unbound-control
 - prometheus-node-exporter-lua
 
-## Configure Unbound
+## Required Unbound Settings
 
 Add the following settings (under Services → Unbound DNS → Files → Extended)
 ```
@@ -65,15 +65,11 @@ remote-control:
     control-use-cert: no
 ```
 
-## Install latest
+## Install Latest
 ```bash
-wget https://marinierb.github.io/prometheus-node-exporter-lua-unbound/prometheus-node-exporter-lua-unbound-latest.apk
+wget https://marinierb.github.io/prometheus-node-exporter-lua-unbound/prometheus-node-exporter-lua-unbound.apk
 apk add --allow-untrusted prometheus-node-exporter-lua-unbound-latest.apk
 ```
-
-## All versions
-
-See https://marinierb.github.io/prometheus-node-exporter-lua-unbound/
 
 ## Test it
 ```bash
