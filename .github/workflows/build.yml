@@ -43,7 +43,7 @@ jobs:
           PACKAGES: prometheus-node-exporter-lua-unbound
           IGNORE_ERRORS: 1
           NO_DEFAULT_FEEDS: 1
-          INDEX: 1
+          # INDEX: 1
           V: s
 
       - name: Store packages
