@@ -9,22 +9,16 @@ on:
   workflow_dispatch:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
         arch:
           - aarch64_cortex-a53
-
     permissions:
       contents: write   # to create releases and upload artifacts
-
     steps:
       - uses: actions/checkout@v4
-        #with:
-        #  fetch-depth: 0
 
       - name: Get Package Version
         run: |
@@ -59,35 +53,27 @@ jobs:
         with:
           name: "v${{ env.PKG_VERSION }}${{ env.PKG_RELEASE != '1' && format('-{0}', env.PKG_RELEASE) || '' }}"
           files: bin/packages/${{ matrix.arch }}/action/*.apk
-  deploy:
 
+  deploy:
     needs: build
     permissions:
       pages: write
       id-token: write
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
     steps:
-
-      - name: Checkout gh-pages-dist
-        uses: actions/checkout@v4
-        with:
-          ref: refs/heads/gh-pages-dist
-
       - name: Download built packages
         uses: actions/download-artifact@v4
         with:
           name: packages
-          path: packages/${{ needs.build.outputs.arch }}
+          path: dist/packages/aarch64_cortex-a53
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .   # root of the checked-out gh-pages-dist branch
+          path: dist/
 
       - name: Deploy to GitHub Pages
         id: deployment
