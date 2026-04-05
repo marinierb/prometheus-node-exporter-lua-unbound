@@ -68,7 +68,7 @@ remote-control:
 ## Install Latest
 ```bash
 wget https://marinierb.github.io/prometheus-node-exporter-lua-unbound/prometheus-node-exporter-lua-unbound.apk
-apk add --allow-untrusted prometheus-node-exporter-lua-unbound-latest.apk
+apk add --allow-untrusted prometheus-node-exporter-lua-unbound.apk
 ```
 
 ## Test it
