@@ -7,7 +7,8 @@
             "EXPORTER_DST":      "root@192.168.1.1:/usr/lib/lua/prometheus-collectors/unbound.lua",
             "EXPORTER_RESTART":  "ssh root@192.168.1.1 service prometheus-node-exporter-lua restart",
             "EXPORTER_TEST":     "brave http://router:9100/metrics",
-            "GITHUB_BUILD":      "gh workflow run build.yml"
+            "GITHUB_BUILD":      "gh workflow run build.yml",
+            "GITHUB_BROWSE_ACTIONS": "gh browse -a"
         }
     },
     "tasks": [
@@ -35,7 +36,7 @@
         {
             "label": "$(arrow-right) Build on GitHub",
             "type": "shell",
-            "command": "$GITHUB_BUILD",
+            "command": "$GITHUB_BUILD && $GITHUB_BROWSE_ACTIONS",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
