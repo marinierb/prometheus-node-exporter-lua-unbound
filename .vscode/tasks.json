@@ -6,7 +6,8 @@
             "EXPORTER_SRC":      "${workspaceFolder}/prometheus-node-exporter-lua-unbound/files/usr/lib/lua/prometheus-collectors/unbound.lua",
             "EXPORTER_DST":      "root@192.168.1.1:/usr/lib/lua/prometheus-collectors/unbound.lua",
             "EXPORTER_RESTART":  "ssh root@192.168.1.1 service prometheus-node-exporter-lua restart",
-            "EXPORTER_TEST":     "brave http://router:9100/metrics"
+            "EXPORTER_TEST":     "brave http://router:9100/metrics",
+            "GITHUB_BUILD":      "gh workflow run build.yml"
         }
     },
     "tasks": [
@@ -14,6 +15,27 @@
             "label": "$(arrow-right) Copy to router",
             "type": "shell",
             "command": "$RSYNC_CMD $EXPORTER_SRC $EXPORTER_DST && $EXPORTER_RESTART && $EXPORTER_TEST",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "statusbar": {
+                    "color" : "#226dd6"
+                }
+            }
+        },
+        {
+            "label": "$(arrow-right) Build on GitHub",
+            "type": "shell",
+            "command": "$GITHUB_BUILD",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
