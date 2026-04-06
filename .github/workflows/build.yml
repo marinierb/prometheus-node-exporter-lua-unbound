@@ -80,6 +80,9 @@ jobs:
           echo '<html><head><title>${{ env.PKG_NAME }}</title></head><body><h1>${{ env.PKG_NAME }}</h1><ul>' > dist/index.html
           for f in dist/*; do
             name=$(basename "$f")
+            if [ "$name" = "index.html" ]; then
+              continue
+            fi
             echo "<li><a href=\"$name\">$name</a></li>" >> dist/index.html
           done
           echo '</ul></body></html>' >> dist/index.html
