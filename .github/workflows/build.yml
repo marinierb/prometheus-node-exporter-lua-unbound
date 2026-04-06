@@ -75,6 +75,15 @@ jobs:
         run: |
           mv dist/${{ env.PKG_NAME }}-*.apk dist/${{ env.PKG_NAME }}.apk
 
+      - name: Create index.html
+        run: |
+          echo '<html><head><title>${{ env.PKG_NAME }}</title></head><body><h1>${{ env.PKG_NAME }}</h1><ul>' > dist/index.html
+          for f in dist/*; do
+            name=$(basename "$f")
+            echo "<li><a href=\"$name\">$name</a></li>" >> dist/index.html
+          done
+          echo '</ul></body></html>' >> dist/index.html
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
