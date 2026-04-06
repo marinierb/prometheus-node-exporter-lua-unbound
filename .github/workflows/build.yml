@@ -68,7 +68,7 @@ jobs:
       - name: Download built packages
         uses: actions/download-artifact@v4
         with:
-          name: "${{ env.PKG_ARCH }}-packages"
+          name: "packages"
           path: dist/
 
       - name: Rename apk file
