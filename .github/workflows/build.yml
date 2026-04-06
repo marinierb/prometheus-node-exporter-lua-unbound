@@ -77,7 +77,7 @@ jobs:
 
       - name: Create index.html
         run: |
-          echo '<html><head><title>${{ env.PKG_NAME }}</title></head><body><h1>${{ env.PKG_NAME }}</h1><ul>' > dist/index.html
+          echo '<html><head><title>${{ env.PKG_NAME }}</title></head><body><h2>${{ env.PKG_NAME }}</h2><ul>' > dist/index.html
           for f in dist/*; do
             name=$(basename "$f")
             if [ "$name" = "index.html" ]; then
