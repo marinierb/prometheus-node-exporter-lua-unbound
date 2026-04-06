@@ -24,6 +24,7 @@ jobs:
           PKG_RELEASE=$(grep '^PKG_RELEASE' ${{ env.PKG_NAME }}/Makefile | cut -d= -f2 | tr -d ' ')
           echo "PKG_VERSION=$PKG_VERSION" >> $GITHUB_ENV
           echo "PKG_RELEASE=$PKG_RELEASE" >> $GITHUB_ENV
+          echo "PKG_TAG=$PKG_VERSION$([ $PKG_RELEASE != 1 ] && echo -$PKG_RELEASE || echo)" >> $GITHUB_ENV
 
       - name: Set SDK Architecture
         run: |
@@ -42,19 +43,19 @@ jobs:
       - name: Store packages
         uses: actions/upload-artifact@v4
         with:
-          name: packages
+          name: ${{ matrix.arch }}-packages
           path: bin/packages/${{ matrix.arch }}/action/*.apk
 
       - name: Force push tag
         run: |
-          git tag -f ${{ env.PKG_VERSION }}
-          git push -f origin ${{ env.PKG_VERSION }}
+          git tag -f ${{ env.PKG_TAG }}
+          git push -f origin ${{ env.PKG_TAG }}
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.PKG_VERSION }}
-          name: "${{ env.PKG_VERSION }}${{ env.PKG_RELEASE != '1' && format('-{0}', env.PKG_RELEASE) || '' }}"
+          tag_name: ${{ env.PKG_TAG }}
+          name: "${{ env.PKG_TAG }}"
           files: bin/packages/${{ matrix.arch }}/action/*.apk
 
   deploy:
@@ -70,7 +71,7 @@ jobs:
       - name: Download built packages
         uses: actions/download-artifact@v4
         with:
-          name: packages
+          name: ${{ matrix.arch }}-packages
           path: dist/
 
       - name: Rename apk file
