@@ -6,14 +6,7 @@
             "EXPORTER_SRC":      "${workspaceFolder}/prometheus-node-exporter-lua-unbound/files/usr/lib/lua/prometheus-collectors/unbound.lua",
             "EXPORTER_DST":      "root@192.168.1.1:/usr/lib/lua/prometheus-collectors/unbound.lua",
             "EXPORTER_RESTART":  "ssh root@192.168.1.1 service prometheus-node-exporter-lua restart",
-            "EXPORTER_TEST":     "brave http://router:9100/metrics",
-            "PACKAGE_PUT_FILES": "rsync -arv ${workspaceFolder}/prometheus-node-exporter-lua-unbound /home/bruno/OpenWrt/packages/utils/",
-            "PACKAGES_CD":       "cd /home/bruno/OpenWrt/openwrt",
-            "PACKAGES_MAKE":     "make -j16 package/prometheus-node-exporter-lua-unbound/{clean,compile} V=s",
-            "PACKAGES_CHECK":    "ls -ltr bin/packages/aarch64_cortex-a53/packages",
-            "PACKAGE_FETCH":     "rsync -av /home/bruno/OpenWrt/openwrt/bin/packages/aarch64_cortex-a53/packages/prometheus-node-exporter-lua-unbound-* root@router:/mnt/sda1/",
-            "PACKAGE_INSTALL":   "ssh root@router apk add --allow-untrusted /mnt/sda1/prometheus-node-exporter-lua-unbound-*.apk",
-            "PACKAGE_TEST":      "brave http://router:9100/metrics"
+            "EXPORTER_TEST":     "brave http://router:9100/metrics"
         }
     },
     "tasks": [
@@ -21,69 +14,6 @@
             "label": "$(arrow-right) Copy to router",
             "type": "shell",
             "command": "$RSYNC_CMD $EXPORTER_SRC $EXPORTER_DST && $EXPORTER_RESTART && $EXPORTER_TEST",
-            "problemMatcher": [],
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "options": {
-                "statusbar": {
-                    "color" : "#226dd6"
-                }
-            }
-        },
-        {
-            "label": "$(arrow-right) Make",
-            "type": "shell",
-            "command": "$PACKAGE_PUT_FILES && $PACKAGES_CD && $PACKAGES_MAKE && $PACKAGES_CHECK",
-            "problemMatcher": [],
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "options": {
-                "statusbar": {
-                    "color" : "#226dd6"
-                }
-            }
-        },
-        {
-            "label": "$(arrow-right) Install",
-            "type": "shell",
-            "command": "$PACKAGE_COPY && $PACKAGE_INSTALL && $PACKAGE_TEST",
-            "problemMatcher": [],
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "options": {
-                "statusbar": {
-                    "color" : "#226dd6"
-                }
-            }
-        },
-        {
-            "label": "$(arrow-right) Deploy",
-            "type": "shell",
-            "command": "${workspaceFolder}/.vscode/deploy.sh",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
