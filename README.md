@@ -1,6 +1,8 @@
 # OpenWrt Unbound stats collector
 
-For regular stats only - no extended
+#### For OpenWrt 25.12
+
+Collected Unbound regular stats (no extended)
 ```
 # TYPE unbound_num_queries_ip_ratelimited_total counter
 # TYPE unbound_num_queries_cookie_valid_total counter
