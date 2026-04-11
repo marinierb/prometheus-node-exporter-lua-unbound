@@ -2,29 +2,32 @@
     "version": "2.0.0",
     "options": {
         "env": {
-            "RSYNC_CMD":         "rsync -av --progress",
             "EXPORTER_SRC":      "${workspaceFolder}/prometheus-node-exporter-lua-unbound/files/usr/lib/lua/prometheus-collectors/unbound.lua",
             "EXPORTER_DST":      "root@192.168.1.1:/usr/lib/lua/prometheus-collectors/unbound.lua",
             "EXPORTER_RESTART":  "ssh root@192.168.1.1 service prometheus-node-exporter-lua restart",
             "EXPORTER_TEST":     "brave http://router:9100/metrics",
             "GITHUB_BUILD":      "gh workflow run build.yml",
+            "MAKEFILE_FORMAL":   "${workspaceFolder}/Makefile.formal",
+            "PACKAGES_SCRIPT":   "/home/bruno/OpenWrt/packages/utils/prometheus-node-exporter-lua/files/usr/lib/lua/prometheus-collectors/unbound.lua",
+            "PACKAGES_MAKEFILE": "/home/bruno/OpenWrt/packages/utils/prometheus-node-exporter-lua/Makefile",
+            "PACKAGES_DIR":      "/home/bruno/OpenWrt/openwrt",
+            "PACKAGES_MAKE":     "make -j16 package/prometheus-node-exporter-lua/{clean,compile} V=sc",
+            "PACKAGES_CHECK":    "ls -ltr bin/packages/aarch64_cortex-a53/packages",
+            "PACKAGE_COPY":      "rsync -av /home/bruno/OpenWrt/openwrt/bin/packages/aarch64_cortex-a53/packages/prometheus-node-exporter-lua-unbound-* root@router:/mnt/sda1/",
+            "PACKAGE_INSTALL":   "ssh root@router apk add --allow-untrusted /mnt/sda1/prometheus-node-exporter-lua-unbound-*.apk"
         }
     },
     "tasks": [
         {
             "label": "$(arrow-right) Copy to router",
             "type": "shell",
-            "command": "$RSYNC_CMD $EXPORTER_SRC $EXPORTER_DST && $EXPORTER_RESTART && $EXPORTER_TEST",
+            "command": "rsync -av $EXPORTER_SRC $EXPORTER_DST && $EXPORTER_RESTART && $EXPORTER_TEST",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
                 "reveal": "always",
                 "focus": false,
                 "panel": "shared"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
             },
             "options": {
                 "statusbar": {
@@ -36,6 +39,40 @@
             "label": "$(arrow-right) Build on GitHub",
             "type": "shell",
             "command": "$GITHUB_BUILD",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "statusbar": {
+                    "color" : "#226dd6"
+                }
+            }
+        },
+        {
+            "label": "$(arrow-right) Make",
+            "type": "shell",
+            "command": "cp $EXPORTER_SRC $PACKAGES_SCRIPT && cp $MAKEFILE_FORMAL $PACKAGES_MAKEFILE && cd $PACKAGES_DIR && $PACKAGES_MAKE && $PACKAGES_CHECK",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "statusbar": {
+                    "color" : "#226dd6"
+                }
+            }
+        },
+        {
+            "label": "$(arrow-right) Install",
+            "type": "shell",
+            "command": "$PACKAGE_COPY && $PACKAGE_INSTALL && $PROMETHEUS_PST2 && $EXPORTER_RESTART",
             "problemMatcher": [],
             "presentation": {
                 "echo": true,
