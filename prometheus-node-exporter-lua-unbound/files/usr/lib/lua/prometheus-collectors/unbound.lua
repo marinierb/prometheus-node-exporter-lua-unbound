@@ -38,22 +38,12 @@ local function scrape()
 
     sock:settimeout(1)
     sock:send("UBCT1 stats_noreset\n")
+    local out = sock:receive("*a")
 
-    local chunks = {}
-    while true do
-        local chunk, err, partial = sock:receive(4096)
-        if partial and partial ~= "" then
-            chunks[#chunks + 1] = partial
-        end
-        if not chunk then break end
-        chunks[#chunks + 1] = chunk
-    end
     sock:close()
 
-    local out = table.concat(chunks)
-
     for line in out:gmatch("[^\r\n]+") do
-        local key, val = line:match("^([%w%._]+)=(%-?[%d%.]+)$")
+        local key, val = line:match("^([^=]+)=(.+)$")
         if key and val then
             local n = tonumber(val)
             if metrics[key] then
