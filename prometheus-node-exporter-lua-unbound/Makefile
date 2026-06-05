@@ -26,6 +26,11 @@ define Package/$(PKG_NAME)
   DEPENDS:=+unbound-control +prometheus-node-exporter-lua
 endef
 
+define Package/$(PKG_NAME)/description
+  Adds a Unbound stats collector to the Prometheus node exporter.
+  Refer to https://github.com/marinierb/prometheus-node-exporter-lua-unbound for configuration details.
+endef
+
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/prometheus-collectors
 	$(INSTALL_DATA) ./files/usr/lib/lua/prometheus-collectors/unbound.lua         $(1)/usr/lib/lua/prometheus-collectors/

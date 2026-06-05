@@ -1,6 +1,8 @@
 # OpenWrt Unbound stats collector
 
-For regular stats only - no extended
+#### For OpenWrt 25.12
+
+Collected Unbound regular stats (no extended)
 ```
 # TYPE unbound_num_queries_ip_ratelimited_total counter
 # TYPE unbound_num_queries_cookie_valid_total counter
@@ -65,7 +67,7 @@ remote-control:
     control-use-cert: no
 ```
 
-## Install Latest
+## Install
 ```bash
 wget https://marinierb.github.io/prometheus-node-exporter-lua-unbound/prometheus-node-exporter-lua-unbound.apk
 apk add --allow-untrusted prometheus-node-exporter-lua-unbound.apk
