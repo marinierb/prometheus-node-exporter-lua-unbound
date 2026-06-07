@@ -18,6 +18,7 @@ define Package/$(PKG_NAME)/Default
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=Prometheus node exporter for Unbound stats
+  PKGARCH:=all
 endef
 
 define Package/$(PKG_NAME)
