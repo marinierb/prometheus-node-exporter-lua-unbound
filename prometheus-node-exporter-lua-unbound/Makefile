@@ -23,7 +23,7 @@ endef
 
 define Package/$(PKG_NAME)
   $(call Package/$(PKG_NAME)/Default)
-  DEPENDS:=+unbound-control +prometheus-node-exporter-lua
+  DEPENDS:=prometheus-node-exporter-lua +unbound-daemon
 endef
 
 define Package/$(PKG_NAME)/description

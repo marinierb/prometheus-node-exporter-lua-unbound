@@ -282,7 +282,7 @@ endef
 define Package/prometheus-node-exporter-lua-unbound
   $(call Package/prometheus-node-exporter-lua/Default)
   TITLE+= (unbound stats collector)
-  DEPENDS:=prometheus-node-exporter-lua +unbound-control
+  DEPENDS:=prometheus-node-exporter-lua +unbound-daemon
 endef
 
 define Package/prometheus-node-exporter-lua-unbound/description
