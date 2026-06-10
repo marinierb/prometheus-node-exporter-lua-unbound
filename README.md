@@ -2,8 +2,8 @@
 
 > [!NOTE]
 > This package has not yet hit the official OpenWrt software repository.
-> <br>In the meantime, you can copy the **unbound.lua*** file to your router
-> <br>and restart the *prometheus-node-exporter-lua* service.
+> <br>In the meantime, you can copy the **unbound.lua** file to **/usr/lib/lua/prometheus-collectors/**
+> <br>on your router and restart the **prometheus-node-exporter-lua** service.
 
 #### For OpenWrt 25.12
 
