@@ -1,13 +1,8 @@
 # OpenWrt Unbound stats collector
 
-> [!NOTE]
-> This package has not yet hit the official OpenWrt software repository.
-> <br>In the meantime, you can copy the **unbound.lua** file to **/usr/lib/lua/prometheus-collectors/**
-> <br>on your router and restart the **prometheus-node-exporter-lua** service.
-
 #### For OpenWrt 25.12
 
-Collected Unbound regular stats (no extended)
+Collects Unbound regular stats (no extended stats)
 ```
 # TYPE unbound_num_queries_ip_ratelimited_total counter
 # TYPE unbound_num_queries_cookie_valid_total counter
@@ -77,6 +72,11 @@ remote-control:
     control-enable: yes
     control-interface: /run/unbound.ctl
     control-use-cert: no
+```
+
+## Restart service prometheus-node-exporter-lua restart
+```bash
+service prometheus-node-exporter-lua restart
 ```
 
 ## Test it
