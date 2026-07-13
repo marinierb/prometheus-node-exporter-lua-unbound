@@ -65,7 +65,7 @@ unbound_recursion_time_median{} 0.0139971
 
 Add the following settings
 - In LuCI under **Services → Unbound DNS → Files → Extended**
-- Or in file **/etc/unbound/unbound_ext.conf**
+- Or edit file **/etc/unbound/unbound_ext.conf**
 <br>and restart unbound service
 ```
 remote-control:
